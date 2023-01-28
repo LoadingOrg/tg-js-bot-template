@@ -11,8 +11,8 @@ const { GROUP_ID } = process.env;
 bot.use((ctx, next) => {
   if (!('text' in ctx.message)) return next();
 
-  if (ctx.message.chat.type === 'private') {
-    ctx.telegram.sendMessage(GROUP_ID, `${ctx.message.from.username}: ${ctx.message.text}`);
+  if (GROUP_ID && ctx.message.chat.id !== Number(GROUP_ID)) {
+    return ctx.reply('This bot only works in a group');
   }
   next();
 });
